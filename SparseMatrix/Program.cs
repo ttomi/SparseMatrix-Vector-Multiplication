@@ -99,7 +99,7 @@ namespace SparseMatrix
                 }
                 Console.WriteLine();
                 Console.WriteLine("Result: ");
-                foreach (int res in sparse.result)
+                foreach (int res in sparse.Result)
                 {
                     Console.Write(res);
                     Console.Write(" ");

@@ -9,7 +9,7 @@ namespace SparseMatrix
         List<int> column = new List<int>();
         List<int> value = new List<int>();
         List<int> row = new List<int>();
-        public List<int> result = new List<int>();
+        public List<int> Result = new List<int>();
 
 
         public SparseMatrix(int[,] matrix)
@@ -36,25 +36,26 @@ namespace SparseMatrix
         public void Multiply(int slice, int noOfThreads, int[] vertex)
         {
             Stopwatch sw = Stopwatch.StartNew();
-            
-            for (int i = slice / noOfThreads; i < row.Count / noOfThreads; i++)
+
+            for (int i = slice * row.Count / noOfThreads; i < (slice + 1) * row.Count / noOfThreads; i++)
             {
-                result.Add(0);
+                Console.WriteLine("Pocetak " + slice + ". komada: " + sw.Elapsed);
+                Result.Add(0);
                 int j = row[i];
                 if (j < row[(row.Count) - 1])
                     for (j = row[i];
                          j < row[i + 1]; j++)
                     {
-                        result[i] += value[j] * vertex[column[j]];
+                        Result[i] += value[j] * vertex[column[j]];
                     }
                 else
                     for (j = row[i];
-                             j < value.Count; j++)
+                             j < (value.Count); j++)
                     {
-                        result[i] += value[j] * vertex[column[j]];
+                        Result[i] += value[j] * vertex[column[j]];
                     }
+                Console.WriteLine("Kraj " + slice + ". komada: " + sw.Elapsed);
             }
-
             sw.Stop();
             Console.WriteLine("Vrijeme izvršavanja " + (slice + 1) + ". threada: " + sw.Elapsed);
         }
