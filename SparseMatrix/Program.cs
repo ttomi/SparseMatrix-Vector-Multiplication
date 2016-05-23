@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 
 
@@ -7,7 +8,7 @@ namespace SparseMatrix
 {
     class Program
     {
-        private static readonly int SIZE = 5;
+        private static readonly int SIZE = 50;
 
         static void Main(string[] args)
         {
@@ -50,36 +51,11 @@ namespace SparseMatrix
             //    Console.WriteLine();
             //}
 
-
-
-            /*Console.Write("Value niz: ");
-            for (int z = 0; z < value.Count; z++)
-            {
-                Console.Write(value[z] + " ");
-            }
-
-            Console.WriteLine();
-            Console.Write("Column niz: ");
-
-            for (int f = 0; f < column.Count; f++)
-            {
-                Console.Write(column[f] + " ");
-
-            }
-
-            Console.WriteLine();
-            Console.Write("Row_id niz: ");
-
-            for (int g = 0; g < row_id.GetLength(0); g++)
-            {
-                Console.Write(row_id[g] + " ");
-
-            }
-            Console.WriteLine();*/
             for (int noOfThreads = 1; noOfThreads < 12; noOfThreads *= 2)
             {
+                Stopwatch thStopwatch = Stopwatch.StartNew();
                 Console.WriteLine("Izvedba s " + noOfThreads + " threada:");
-
+                Console.WriteLine("Pocetno vrijeme: " + thStopwatch.Elapsed);
                 List<ThreadStart> start = new List<ThreadStart>(noOfThreads);
                 List<Thread> thread = new List<Thread>(noOfThreads);
                 for (int threadId = 0; threadId < noOfThreads; threadId++)
@@ -92,11 +68,10 @@ namespace SparseMatrix
                 for (int threadId = 0; threadId < noOfThreads; threadId++)
                 {
                     thread[threadId].Start();
-                }
-                for (int threadId = 0; threadId < noOfThreads; threadId++)
-                {
                     thread[threadId].Join();
                 }
+                
+                Console.WriteLine("Krajnje vrijeme: " + thStopwatch.Elapsed);
                 Console.WriteLine();
                 Console.WriteLine("Result: ");
                 foreach (int res in sparse.Result)
@@ -106,15 +81,9 @@ namespace SparseMatrix
                 }
                 Console.WriteLine();
                 Console.WriteLine();
-
                 sparse.Result.Clear();  //  so it wouldn't add over old values
             }
         }
-        /*Console.Write("Result niz: ");
-        for (int a = 0; a < result.Count; a++)
-        {
-            Console.Write(result[a] + " ");
-        }*/
     }
 }
 

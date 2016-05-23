@@ -31,6 +31,35 @@ namespace SparseMatrix
                     }
                 }
             }
+            //////////////////////////////
+            //// Ispis
+            //////////////////////////////
+
+            //Console.Write("Svi NNZ: \n");
+            //foreach (int v in value)
+            //{
+            //    Console.Write(v + " ");
+            //}
+
+            //Console.WriteLine();
+            //Console.WriteLine();
+            //Console.Write("Redom stupci NNZ-ova: \n");
+
+            //foreach (int c in column)
+            //{
+            //    Console.Write(c + " ");
+            //}
+
+            //Console.WriteLine();
+            //Console.WriteLine();
+            //Console.Write("Indeksi prvih NNZ u svakom retku: \n");
+
+            //foreach (int r in row)
+            //{
+            //    Console.Write(r + " ");
+            //}
+            //Console.WriteLine();
+            //Console.WriteLine();
         }
 
         public void Multiply(int slice, int noOfThreads, int[] vertex)
