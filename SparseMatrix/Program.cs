@@ -31,24 +31,24 @@ namespace SparseMatrix
             SparseMatrix sparse = new SparseMatrix(matrix);
 
 
-            Console.Write("Vektor: ");
-            for (int a = 0; a < matrix.GetLength(1); a++)
-            {
-                Console.Write(vector[a] + " ");
-            }
+            //Console.Write("Vektor: ");
+            //for (int a = 0; a < matrix.GetLength(1); a++)
+            //{
+            //    Console.Write(vector[a] + " ");
+            //}
 
-            Console.WriteLine();
-            Console.Write("Matrica: ");
-            Console.WriteLine();
+            //Console.WriteLine();
+            //Console.Write("Matrica: ");
+            //Console.WriteLine();
 
-            for (int i1 = 0; i1 < matrix.GetLength(0); i1++)
-            {
-                for (int j1 = 0; j1 < matrix.GetLength(1); j1++)
-                {
-                    Console.Write(matrix[i1, j1] + " ");
-                }
-                Console.WriteLine();
-            }
+            //for (int i1 = 0; i1 < matrix.GetLength(0); i1++)
+            //{
+            //    for (int j1 = 0; j1 < matrix.GetLength(1); j1++)
+            //    {
+            //        Console.Write(matrix[i1, j1] + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
 
 
 
@@ -98,11 +98,13 @@ namespace SparseMatrix
                     thread[threadId].Join();
                 }
                 Console.WriteLine();
+                Console.WriteLine("Result: ");
                 foreach (int res in sparse.result)
                 {
                     Console.Write(res);
                     Console.Write(" ");
                 }
+                Console.WriteLine();
                 Console.WriteLine();
             }
         }
