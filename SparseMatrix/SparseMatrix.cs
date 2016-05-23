@@ -36,10 +36,10 @@ namespace SparseMatrix
         public void Multiply(int slice, int noOfThreads, int[] vertex)
         {
             Stopwatch sw = Stopwatch.StartNew();
+            Console.WriteLine("Pocetak " + slice + ". komada: " + sw.Elapsed);
 
             for (int i = slice * row.Count / noOfThreads; i < (slice + 1) * row.Count / noOfThreads; i++)
             {
-                Console.WriteLine("Pocetak " + slice + ". komada: " + sw.Elapsed);
                 Result.Add(0);
                 int j = row[i];
                 if (j < row[(row.Count) - 1])
@@ -54,10 +54,9 @@ namespace SparseMatrix
                     {
                         Result[i] += value[j] * vertex[column[j]];
                     }
-                Console.WriteLine("Kraj " + slice + ". komada: " + sw.Elapsed);
             }
             sw.Stop();
-            Console.WriteLine("Vrijeme izvršavanja " + (slice + 1) + ". threada: " + sw.Elapsed);
+            Console.WriteLine("Vrijeme izvršavanja " + (slice + 1) + ". komada: " + sw.Elapsed);
         }
 
     }
