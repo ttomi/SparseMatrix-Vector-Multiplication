@@ -106,6 +106,8 @@ namespace SparseMatrix
                 }
                 Console.WriteLine();
                 Console.WriteLine();
+
+                sparse.Result.Clear();  //  so it wouldn't add over old values
             }
         }
         /*Console.Write("Result niz: ");
