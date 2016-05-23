@@ -7,9 +7,8 @@ namespace SparseMatrix
     public class SparseMatrix
     {
         List<int> column = new List<int>();
-        List<int> value = new List<int>();
+        public List<int> value = new List<int>();
         List<int> row = new List<int>();
-        public List<int> Result = new List<int>();
 
 
         public SparseMatrix(int[,] matrix)
@@ -62,30 +61,32 @@ namespace SparseMatrix
             //Console.WriteLine();
         }
 
-        public void Multiply(int slice, int noOfThreads, int[] vertex)
+        public void Multiply(int slice, int noOfThreads, int[] vertex, int[] result)
         {
+            int cSlice = slice;
+            int cNoOfThreads = noOfThreads;
             Stopwatch sw = Stopwatch.StartNew();
-            Console.WriteLine("Pocetak " + (slice + 1) + ". komada: " + sw.Elapsed);
+            Console.WriteLine("Pocetak " + (cSlice + 1) + ". komada: " + sw.Elapsed);
 
-            for (int i = slice * row.Count / noOfThreads; i < (slice + 1) * row.Count / noOfThreads; i++)
+            for (int i = cSlice * row.Count / cNoOfThreads; i < (cSlice + 1) * row.Count / cNoOfThreads; i++)
             {
-                Result.Add(0);
-                int j = row[i];
+                var ci = i;
+                int j = row[ci];
                 if (j < row[(row.Count) - 1])
-                    for (j = row[i];
-                         j < row[i + 1]; j++)
+                    for (j = row[ci]; j < row[ci + 1]; j++)
                     {
-                        Result[i] += value[j] * vertex[column[j]];
+                        if (vertex[column[j]] != 0) 
+                            result[ci] += value[j] * vertex[column[j]];
                     }
                 else
-                    for (j = row[i];
-                             j < (value.Count); j++)
+                    for (j = row[ci]; j < (value.Count); j++)
                     {
-                        Result[i] += value[j] * vertex[column[j]];
+                        if (vertex[column[j]] != 0)
+                            result[ci] += value[j] * vertex[column[j]];
                     }
             }
             sw.Stop();
-            Console.WriteLine("Vrijeme izvršavanja " + (slice + 1) + ". komada: " + sw.Elapsed);
+            Console.WriteLine("Vrijeme izvršavanja " + (cSlice + 1) + ". komada: " + sw.Elapsed);
         }
 
     }

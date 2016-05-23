@@ -31,7 +31,6 @@ namespace SparseMatrix
 
             SparseMatrix sparse = new SparseMatrix(matrix);
 
-
             //Console.Write("Vektor: ");
             //for (int a = 0; a < matrix.GetLength(1); a++)
             //{
@@ -53,6 +52,7 @@ namespace SparseMatrix
 
             for (int noOfThreads = 1; noOfThreads < 12; noOfThreads *= 2)
             {
+                int[] result = new int[sparse.value.Count];
                 Stopwatch thStopwatch = Stopwatch.StartNew();
                 Console.WriteLine("Izvedba s " + noOfThreads + " threada:");
                 Console.WriteLine("Pocetno vrijeme: " + thStopwatch.Elapsed);
@@ -62,26 +62,30 @@ namespace SparseMatrix
                 {
                     var id = threadId;
                     var threads = noOfThreads;
-                    start.Add(delegate { sparse.Multiply(id, threads, vector); });
+                    start.Add(delegate { sparse.Multiply(id, threads, vector, result); });
                     thread.Add(new Thread(start[threadId]));
                 }
                 for (int threadId = 0; threadId < noOfThreads; threadId++)
                 {
                     thread[threadId].Start();
+                }
+                for (int threadId = 0; threadId < noOfThreads; threadId++)
+                {
                     thread[threadId].Join();
                 }
-                
+
+
                 Console.WriteLine("Krajnje vrijeme: " + thStopwatch.Elapsed);
                 Console.WriteLine();
-                Console.WriteLine("Result: ");
-                foreach (int res in sparse.Result)
-                {
-                    Console.Write(res);
-                    Console.Write(" ");
-                }
-                Console.WriteLine();
-                Console.WriteLine();
-                sparse.Result.Clear();  //  so it wouldn't add over old values
+                //Console.WriteLine("result: ");
+                //foreach (int res in result)
+                //{
+                //    Console.Write(res);
+                //    Console.Write(" ");
+                //}
+                //Console.WriteLine();
+                //Console.WriteLine();
+                //  so it wouldn't add over old values
             }
         }
     }
