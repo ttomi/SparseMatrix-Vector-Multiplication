@@ -65,7 +65,7 @@ namespace SparseMatrix
         public void Multiply(int slice, int noOfThreads, int[] vertex)
         {
             Stopwatch sw = Stopwatch.StartNew();
-            Console.WriteLine("Pocetak " + slice + ". komada: " + sw.Elapsed);
+            Console.WriteLine("Pocetak " + (slice + 1) + ". komada: " + sw.Elapsed);
 
             for (int i = slice * row.Count / noOfThreads; i < (slice + 1) * row.Count / noOfThreads; i++)
             {
